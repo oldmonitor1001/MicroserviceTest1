@@ -14,11 +14,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
+    
+    - name: 'Build and push image'
+      uses: azure/docker-login@v1
       with:
         login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . -f MicroServiceAPIOne/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/microserviceone:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/microserviceone:${{ github.sha }}
+        docker build . -f MicroServiceAPIOne/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/microserviceone
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/microserviceone
